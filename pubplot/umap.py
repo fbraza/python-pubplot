@@ -47,15 +47,15 @@ uplt.rc.update(
 
 def _auto_point_size(n_cells: int) -> float:
     if n_cells > 50_000:
-        return 0.5
+        return 0.20
     if n_cells > 20_000:
-        return 1.0
+        return 0.5
     if n_cells > 10_000:
-        return 2.0
+        return 1.0
     if n_cells > 5_000:
-        return 4.0
+        return 2.0
     if n_cells > 2_000:
-        return 8.0
+        return 4.0
     if n_cells > 500:
         return 16.0
     return 32
