@@ -47,18 +47,18 @@ uplt.rc.update(
 
 def _auto_point_size(n_cells: int) -> float:
     if n_cells > 50_000:
-        return 2.0
+        return 0.5
     if n_cells > 20_000:
-        return 5.0
+        return 1.0
     if n_cells > 10_000:
-        return 10.0
+        return 2.0
     if n_cells > 5_000:
-        return 18.0
+        return 4.0
     if n_cells > 2_000:
-        return 30.0
+        return 8.0
     if n_cells > 500:
-        return 50.0
-    return 70.0
+        return 16.0
+    return 32
 
 
 def _darken_color(hex_color: str, factor: float = 0.6) -> str:
@@ -216,9 +216,9 @@ def plot_embedding_categorical(
         )
 
     if save_path is not None:
-        if save_fmt in ("png", "both"):
+        if save_fmt == ("png"):
             fig.savefig(f"{save_path}.png", dpi=300, bbox_inches="tight")
-        if save_fmt in ("svg", "both"):
+        if save_fmt == ("svg"):
             fig.savefig(f"{save_path}.svg", dpi=300, bbox_inches="tight")
 
     return fig, ax
@@ -236,6 +236,7 @@ def plot_embedding_continuous(
     point_size: float | None = None,
     cbar_label: str = "norm. Expression",
     save_path: str | None = None,
+    save_fmt: str = "png",
 ) -> tuple[Figure, Axes]:
     """Plot a continuous-coloured embedding (feature / gene-expression plot).
 
