@@ -10,9 +10,9 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import matplotlib as mpl
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import ultraplot as uplt
 from matplotlib.ticker import MultipleLocator, NullLocator
 from scipy.stats import gaussian_kde
 
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 __all__ = ["plot_ridge"]
 
 mpl.rcParams["svg.fonttype"] = "none"
-mpl.rcParams.update(
+uplt.rc.update(
     {
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
@@ -114,7 +114,7 @@ def plot_ridge(
 
     Returns
     -------
-    tuple[matplotlib.figure.Figure, matplotlib.axes.Axes]
+    tuple[ultraplot.Figure, ultraplot.Axes]
     """
     groups = groups_to_plot or df[group_col].dropna().unique().tolist()
     data_by_group = [
@@ -143,7 +143,7 @@ def plot_ridge(
     y_positions = np.arange(len(groups))[::-1]
     rng = np.random.default_rng(42)
 
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = uplt.subplot(figsize=figsize)
 
     max_height = 0.0
     for y0, group, values, color in zip(y_positions, groups, data_by_group, colors):
@@ -202,7 +202,6 @@ def plot_ridge(
     ax.grid(False)
     ax.set_facecolor("white")
     fig.patch.set_facecolor("white")
-    fig.tight_layout(pad=0.6)
 
     if save_path is not None:
         save_path = Path(save_path)
