@@ -13,7 +13,7 @@ import matplotlib as mpl
 import numpy as np
 import pandas as pd
 import ultraplot as uplt
-from matplotlib.ticker import MultipleLocator, NullLocator
+from matplotlib.ticker import MaxNLocator, NullLocator
 from scipy.stats import gaussian_kde
 
 from pubplot.palette import RIDGE_REFERENCE_COLORS
@@ -46,17 +46,6 @@ def _feature_fontsize(feature_name: str) -> float:
         return 15
     if n <= 22:
         return 12
-    return 10
-
-
-def _major_tick_step(xlim: tuple[float, float]) -> float:
-    span = xlim[1] - xlim[0]
-    if span <= 4:
-        return 1
-    if span <= 8:
-        return 2
-    if span <= 20:
-        return 5
     return 10
 
 
@@ -188,7 +177,7 @@ def plot_ridge(
     ax.set_ylabel("")
     ax.set_xlabel("")
 
-    ax.xaxis.set_major_locator(MultipleLocator(_major_tick_step(xlim)))
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=5))
     ax.xaxis.set_minor_locator(NullLocator())
     ax.yaxis.set_minor_locator(NullLocator())
     ax.tick_params(axis="x", width=1.6, length=10, labelsize=28, pad=12)

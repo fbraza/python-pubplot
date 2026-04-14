@@ -13,7 +13,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 import pandas as pd
 import ultraplot as uplt
-from matplotlib.ticker import MultipleLocator, NullLocator
+from matplotlib.ticker import MaxNLocator, NullLocator
 
 from pubplot.palette import PUBLICATION_PALETTE
 
@@ -227,11 +227,11 @@ def plot_violinplot(
     ax.tick_params(direction="out", width=0.8, length=3, color="black")
 
     if vert:
-        ax.yaxis.set_major_locator(MultipleLocator(1))
+        ax.yaxis.set_major_locator(MaxNLocator(nbins=5))
         ax.yaxis.set_minor_locator(NullLocator())
         ax.xaxis.set_minor_locator(NullLocator())
     else:
-        ax.xaxis.set_major_locator(MultipleLocator(1))
+        ax.xaxis.set_major_locator(MaxNLocator(nbins=5))
         ax.xaxis.set_minor_locator(NullLocator())
         ax.yaxis.set_minor_locator(NullLocator())
 
