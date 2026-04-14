@@ -13,7 +13,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 import pandas as pd
 import ultraplot as uplt
-from matplotlib.ticker import MaxNLocator, NullLocator
+from matplotlib.ticker import MaxNLocator, NullLocator  # passed to ax.format()
 
 from pubplot.palette import PUBLICATION_PALETTE
 
@@ -57,7 +57,7 @@ def plot_violinplot(
     legend_loc: str = "upper left",
     legend_bbox_to_anchor: tuple[float, float] | None = None,
     save_path: str | None = None,
-    save_fmt: str = "png",
+    save_fmt: str = "png",  # 'png' or 'svg'
 ) -> tuple[Figure, Axes]:
     """Plot a publication-ready violin plot with optional jitter dots.
 
@@ -103,7 +103,7 @@ def plot_violinplot(
         Optional legend anchor.
     save_path : str or None
         Base path for saving (without extension).
-    save_fmt : ``'png'`` | ``'svg'`` | ``'both'``
+    save_fmt : ``'png'`` | ``'svg'``
         Output format.  Default ``'png'``.
 
     Returns
@@ -201,6 +201,9 @@ def plot_violinplot(
             yticklabelsize=8,
             titlesize=9,
             titleweight="bold",
+            ylocator=MaxNLocator(nbins=5),
+            yminorlocator=NullLocator(),
+            xminorlocator=NullLocator(),
         )
     else:
         ax.set_yticks(positions)
@@ -217,6 +220,9 @@ def plot_violinplot(
             yticklabelsize=8,
             titlesize=9,
             titleweight="bold",
+            xlocator=MaxNLocator(nbins=5),
+            xminorlocator=NullLocator(),
+            yminorlocator=NullLocator(),
         )
 
     ax.grid(False)
@@ -225,15 +231,6 @@ def plot_violinplot(
         ax.spines[side].set_linewidth(0.9)
         ax.spines[side].set_color("black")
     ax.tick_params(direction="out", width=0.8, length=3, color="black")
-
-    if vert:
-        ax.yaxis.set_major_locator(MaxNLocator(nbins=5))
-        ax.yaxis.set_minor_locator(NullLocator())
-        ax.xaxis.set_minor_locator(NullLocator())
-    else:
-        ax.xaxis.set_major_locator(MaxNLocator(nbins=5))
-        ax.xaxis.set_minor_locator(NullLocator())
-        ax.yaxis.set_minor_locator(NullLocator())
 
     if use_group_legend:
         if vert:
@@ -262,9 +259,6 @@ def plot_violinplot(
 
     if save_path is None:
         save_path = "./results/violinplot"
-    if save_fmt in ("png", "both"):
-        fig.savefig(f"{save_path}.png", dpi=300, bbox_inches="tight")
-    if save_fmt in ("svg", "both"):
-        fig.savefig(f"{save_path}.svg", dpi=300, bbox_inches="tight")
+    fig.savefig(f"{save_path}.{save_fmt}", dpi=300, bbox_inches="tight")
 
     return fig, ax

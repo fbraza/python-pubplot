@@ -47,7 +47,7 @@ def plot_cell_composition(
     bar_height: float = 0.94,
     legend_title: str | None = None,
     save_path: str | Path | None = None,
-    save_fmt: str = "png",
+    save_fmt: str = "png",  # 'png' or 'svg'
 ) -> tuple[Figure, Axes]:
     """Plot publication-style cell-composition bars.
 
@@ -175,9 +175,6 @@ def plot_cell_composition(
     if save_path is not None:
         save_path = Path(save_path)
         save_path.parent.mkdir(parents=True, exist_ok=True)
-        if save_fmt in ("png", "both"):
-            fig.savefig(save_path.with_suffix(".png"), dpi=300, bbox_inches="tight")
-        if save_fmt in ("svg", "both"):
-            fig.savefig(save_path.with_suffix(".svg"), dpi=300, bbox_inches="tight")
+        fig.savefig(save_path.with_suffix(f".{save_fmt}"), dpi=300, bbox_inches="tight")
 
     return fig, ax

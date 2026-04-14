@@ -159,7 +159,7 @@ def plot_embedding_categorical(
     show_legend : bool
     save_path : str or None
         Base path for saving (without extension).
-    save_fmt : ``'png'`` | ``'svg'`` | ``'both'``
+    save_fmt : ``'png'`` | ``'svg'``
         Output format.  Default ``'png'``.
 
     Returns
@@ -216,10 +216,7 @@ def plot_embedding_categorical(
         )
 
     if save_path is not None:
-        if save_fmt == ("png"):
-            fig.savefig(f"{save_path}.png", dpi=300, bbox_inches="tight")
-        if save_fmt == ("svg"):
-            fig.savefig(f"{save_path}.svg", dpi=300, bbox_inches="tight")
+        fig.savefig(f"{save_path}.{save_fmt}", dpi=300, bbox_inches="tight")
 
     return fig, ax
 
@@ -301,9 +298,6 @@ def plot_embedding_continuous(
     cbar.ax.tick_params(labelsize=7)
 
     if save_path is not None:
-        if save_fmt in ("png", "both"):
-            fig.savefig(f"{save_path}.png", dpi=300, bbox_inches="tight")
-        if save_fmt in ("svg", "both"):
-            fig.savefig(f"{save_path}.svg", dpi=300, bbox_inches="tight")
+        fig.savefig(f"{save_path}.{save_fmt}", dpi=300, bbox_inches="tight")
 
     return fig, ax

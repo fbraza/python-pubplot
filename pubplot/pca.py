@@ -126,9 +126,6 @@ def plot_pca(
     ax.legend(loc="best", ncols=1, fontsize=7, frameon=True, framealpha=0.8)
 
     if save_path is not None:
-        if save_fmt in ("png", "both"):
-            fig.savefig(f"{save_path}.png", dpi=300, bbox_inches="tight")
-        if save_fmt in ("svg", "both"):
-            fig.savefig(f"{save_path}.svg", dpi=300, bbox_inches="tight")
+        fig.savefig(f"{save_path}.{save_fmt}", dpi=300, bbox_inches="tight")
 
     return fig, ax
